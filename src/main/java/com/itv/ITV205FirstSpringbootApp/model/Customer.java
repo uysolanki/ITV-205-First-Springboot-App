@@ -1,5 +1,6 @@
 package com.itv.ITV205FirstSpringbootApp.model;
 
+
 public class Customer {
 
 		private int custId;

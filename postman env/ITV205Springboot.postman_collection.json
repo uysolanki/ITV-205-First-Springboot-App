@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "d8b08d5b-f19b-4fa5-89a4-c2799c6de500",
+		"name": "ITV205Springboot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "17468757",
+		"_collection_link": "https://blue-capsule-906377.postman.co/workspace/LibraryApplicationPostmanAPI~7ba30a40-d502-4987-a717-0d3d2a25e09e/collection/17468757-d8b08d5b-f19b-4fa5-89a4-c2799c6de500?action=share&source=collection_link&creator=17468757"
+	},
+	"item": [
+		{
+			"name": "Add Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"custName\":\"Alice\",\r\n    \"custGender\":\"f\",\r\n    \"custEmail\":\"alice@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/blinkit/v1/addCustomerByRequestBody"
+			},
+			"response": []
+		},
+		{
+			"name": "add Multiple Customers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{url}}/addMultipleCustomers"
+			},
+			"response": []
+		},
+		{
+			"name": "get All Customers",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/getCustomer/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": "{{url}}/updateCustomer/3"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

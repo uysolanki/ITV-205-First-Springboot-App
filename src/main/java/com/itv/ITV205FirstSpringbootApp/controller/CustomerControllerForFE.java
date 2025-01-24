@@ -3,65 +3,48 @@ package com.itv.ITV205FirstSpringbootApp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.itv.ITV205FirstSpringbootApp.model.Customer;
 import com.itv.ITV205FirstSpringbootApp.service.CustomerService;
 
-@RestController
+@Controller
 @RequestMapping("/blinkit/v1")
-public class CustomerController {
+public class CustomerControllerForFE {
 
 	@Autowired
 	CustomerService customerService;
 
-	@RequestMapping("/first")
-	public String welcome() {
-		return "hello";
+	@RequestMapping("/register")
+	public String register(Model model) {
+		Customer c=new Customer();
+		model.addAttribute("mycust",c);
+		return "customer-registration-form";
 	}
 
-	@PostMapping("/addCustomer")
-	public String addCustomer() {
-		Customer c = new Customer();
-		c.setCustEmail("alice@gmail.com");
-		c.setCustGender("f");
-		c.setCustName("Alice");
-		customerService.addCustomer(c);
-		return "Customer Added Successfully";
-	}
-
-	@PostMapping("/addCustomerByRequestParam")
-	public String addCustomerByRequestParam(@RequestParam("a") String email, @RequestParam("b") String gen,
-			@RequestParam("c") String name) {
-		Customer c = new Customer();
-		c.setCustEmail(email);
-		c.setCustGender(gen);
-		c.setCustName(name);
-		customerService.addCustomer(c);
-		return "Customer Added Successfully";
-	}
-
+	
 	@PostMapping("/addCustomerByRequestBody")
-	public Customer addCustomerByRequestBody(@RequestBody Customer customer) {
-		return customerService.addCustomer(customer);
+	public String addCustomerByRequestBody(@ModelAttribute Customer customer) {
+		customerService.addCustomer(customer);
+		return "redirect:/blinkit/v1/homepage";
 	}
+
 	
-	@PostMapping("/addMultipleCustomers")
-	public List<Customer> addMultipleCustomers(@RequestBody List<Customer> customers) {
-		return customerService.addMultipleCustomers(customers);
-	}
-	
-	@GetMapping("/getAllCustomers")
-	public List<Customer> getAllCustomers() {
-		return customerService.getAllCustomers();
+	@GetMapping("/homepage")
+	public String getAllCustomers(Model model) {
+		List<Customer> customers= customerService.getAllCustomers();
+		model.addAttribute("customers",customers);
+		return "customer-list";
 	}
 	
 	@GetMapping("/getCustomer/{custid}")

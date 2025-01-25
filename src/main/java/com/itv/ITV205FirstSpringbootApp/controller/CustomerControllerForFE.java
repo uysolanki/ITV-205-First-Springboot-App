@@ -52,14 +52,22 @@ public class CustomerControllerForFE {
 		return customerService.getCustomer(cid);
 	}
 	
-	@PutMapping("/updateCustomer/{custid}")
-	public Customer updateCustomer(@PathVariable("custid") int cid,@RequestBody Customer newValues) {
-		return customerService.updateCustomer(cid,newValues);
+	@PostMapping("/updateCustomer/{id}")
+	public String updateCustomer(@PathVariable("id") int cid,@ModelAttribute Customer newValues) {
+		customerService.updateCustomer(cid,newValues);
+		return "redirect:/blinkit/v1/homepage";
 	}
 	
-	@DeleteMapping("/deleteCustomer/{custid}")
-	public String deleteCustomer(@PathVariable("custid") int cid) {
+	@RequestMapping("/deleteCustomer/{id}")
+	public String deleteCustomer(@PathVariable("id") int cid) {
 		customerService.deleteCustomer(cid);
-		return "Record Deleted Successfully";
+		return "redirect:/blinkit/v1/homepage";
+	}
+	
+	@RequestMapping("/updateCustomerForm/{id}")
+	public String updateCustomerForm(@PathVariable("id") int cid, Model model) {
+		Customer customerDb=customerService.getCustomer(cid);
+		model.addAttribute("customer",customerDb);
+		return "update-customer-form";
 	}
 }

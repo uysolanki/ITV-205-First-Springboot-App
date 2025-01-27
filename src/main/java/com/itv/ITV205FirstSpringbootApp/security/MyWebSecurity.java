@@ -40,13 +40,19 @@ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 //Authorisation
 @Override
-	protected void configure(HttpSecurity http) throws Exception {
-	http.authorizeRequests()
-    .anyRequest().authenticated()
-    .and()        
-    .formLogin().loginProcessingUrl("/login").successForwardUrl("/blinkit/v1/homepage").permitAll()
-    .and()
-    .cors().and().csrf().disable();
+protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/blinkit/v1/homepage","/blinkit/v1/register","/blinkit/v1/403").hasAnyAuthority("USER","ADMIN")
+        .antMatchers("/blinkit/v1/updateCustomerForm/**","/blinkit/v1/deleteCustomer/**").hasAuthority("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .formLogin().loginProcessingUrl("/login").successForwardUrl("/blinkit/v1/homepage").permitAll()
+        .and()
+        .logout().logoutSuccessUrl("/login").permitAll()
+        .and()
+        .exceptionHandling().accessDeniedPage("/blinkit/v1/403")
+        .and()
+        .cors().and().csrf().disable();
+}
 
-	}
 }

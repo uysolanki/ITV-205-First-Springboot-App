@@ -40,7 +40,7 @@ public class CustomerControllerForFE {
 	}
 
 	
-	@GetMapping("/homepage")
+	@RequestMapping("/homepage")
 	public String getAllCustomers(Model model) {
 		List<Customer> customers= customerService.getAllCustomers();
 		model.addAttribute("customers",customers);
